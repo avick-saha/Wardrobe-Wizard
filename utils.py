@@ -1,4 +1,5 @@
 import time
+import json
 import random
 import os
 import cv2
@@ -79,8 +80,8 @@ def process_images_in_folder(folder_path):
 dominant_colors_upper = process_images_in_folder(r".\Upper Body")
 dominant_colors_lower = process_images_in_folder(r".\Lower Body")
 
-print(dominant_colors_upper)
-print(dominant_colors_lower)
+# print(dominant_colors_upper)
+# print(dominant_colors_lower)
 
 dataset = {
     ('Black',) : (('Grey',), ('White',), ('Yellow',)),
@@ -104,27 +105,40 @@ dataset = {
 #     }
 
 def combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower, dataset):
-    combinations = []
+    combinations = {}
     for upper_body in dominant_colors_upper:
+        combinations[dominant_colors_upper[upper_body]] = []
         for lower_body in dominant_colors_lower:
             if upper_body in dataset and lower_body in dataset[upper_body]:
-                value = (dominant_colors_upper[upper_body], dominant_colors_lower[lower_body])
-                combinations.append(value)
+                combinations[dominant_colors_upper[upper_body]].append(dominant_colors_lower[lower_body])
     return combinations
 
 possible_outfits = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower, dataset)
 print(possible_outfits)
-todays_outfit = possible_outfits[random.randint(0, len(possible_outfits) - 1)]
 
-todays_outfit_upper = cv2.imread(rf".\Upper Body\{todays_outfit[0]}")
-cv2.imshow('For the upper body', todays_outfit_upper)
+# Convert Python to JSON  
+json_object = json.dumps(possible_outfits, indent = 4)
 
-todays_outfit_lower = cv2.imread(rf".\Lower Body\{todays_outfit[1]}")
-cv2.imshow('For the lower body', todays_outfit_lower)
+# Print JSON object
+print(json_object) 
+
+# Randomly select a key (upper body clothing)
+random_upper = random.choice(list(possible_outfits.keys()))
+random_upper_image = rf".\Upper Body\{random_upper}"
+
+# Randomly select a value from the list of values (lower body clothing)
+random_lower = random.choice(possible_outfits[random_upper])
+random_lower_image = rf".\Lower Body\{random_lower}"
+
+# Read and display the images
+todays_outfit_upper = cv2.imread(random_upper_image)
+todays_outfit_lower = cv2.imread(random_lower_image)
 
 end = time.time()
 print("The time of execution of above program is :",
       (end-start) * 10**3, "ms")
 
-cv2.waitKey(0)  
+cv2.imshow('For the upper body', todays_outfit_upper)
+cv2.imshow('For the lower body', todays_outfit_lower)
+cv2.waitKey(0)
 cv2.destroyAllWindows()
