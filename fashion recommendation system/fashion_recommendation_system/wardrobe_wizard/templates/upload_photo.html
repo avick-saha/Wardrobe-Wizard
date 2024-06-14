@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Photo{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="photo">Choose a photo to upload</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+{% else %}
+    <p>{{ message }}</p>
+    <a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>
+    <a href="{% url 'user_signup' %}" class="btn btn-secondary">Sign Up</a>
+{% endif %}
+<a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+{% endblock %}

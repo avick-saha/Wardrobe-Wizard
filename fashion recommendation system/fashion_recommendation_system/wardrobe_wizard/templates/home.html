@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Uploaded Photos</h1>
+{% if user.is_authenticated %}
+    {% if photos %}
+        {% for photo in photos %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ photo.photo.url }}" class="card-img" alt="Photo">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">Uploaded at {{ photo.uploaded_at }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No photos uploaded yet.</p>
+    {% endif %}
+    <a href="{% url 'upload_photo' %}" class="btn btn-primary">Upload New Photo</a>
+{% else %}
+    <p>{{ message }}</p>
+    <a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>
+    <a href="{% url 'user_signup' %}" class="btn btn-secondary">Sign Up</a>
+{% endif %}
+{% endblock %}
