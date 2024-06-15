@@ -4,13 +4,13 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from .models import Photo
+from .models import Upper
 
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
-        photos = Photo.objects.filter(user=request.user)
-        return render(request, 'home.html', {'photos': photos})
+        uppers = Upper.objects.filter(user=request.user)
+        return render(request, 'home.html', {'uppers': uppers})
     else:
         message = "You have to be logged in to see your uploaded photos."
         return render(request, 'home.html', {'message': message})
@@ -45,17 +45,14 @@ def user_logout(request):
     logout(request)
     return redirect('user_login')
 
-def upload_photo(request):
+def upload_upper(request):
     if not request.user.is_authenticated:
         message = "You have to be logged in to upload photos."
-        return render(request, 'upload_photo.html', {'message': message})
+        return render(request, 'upload_upper.html', {'message': message})
     
-    if request.method == 'POST' and request.FILES.get('photo'):
-        photo = request.FILES['photo']
-        fs = FileSystemStorage()
-        filename = fs.save(photo.name, photo)
-        uploaded_file_url = fs.url(filename)
-        Photo.objects.create(user=request.user, photo=filename)
+    if request.method == 'POST' and request.FILES.get('upper'):
+        upper = request.FILES['upper']
+        Upper.objects.create(user=request.user, upper=upper)
         return redirect('home')
     
-    return render(request, 'upload_photo.html')
+    return render(request, 'upload_upper.html')

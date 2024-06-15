@@ -7,5 +7,5 @@ urlpatterns = [
     path("user_signup", views.user_signup, name="user_signup"),
     path("user_login", views.user_login, name="user_login"),
     path('user_logout', views.user_logout, name='user_logout'),
-    path('upload_photo', views.upload_photo, name='upload_photo'),
+    path('upload_upper', views.upload_upper, name='upload_upper'),
 ]

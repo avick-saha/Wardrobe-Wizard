@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Upload Photo{% endblock %}
+{% block title %}Upload Upper Body Cloths Photo{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            <label for="photo">Choose a photo to upload</label>
-            <input type="file" class="form-control-file" id="photo" name="photo" required>
+            <label for="upper">Choose a photo to upload</label>
+            <input type="file" class="form-control-file" id="upper" name="upper" required>
         </div>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
