@@ -4,13 +4,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from .models import Upper
+from .models import Upper, Lower
 
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
         uppers = Upper.objects.filter(user=request.user)
-        return render(request, 'home.html', {'uppers': uppers})
+        lowers = Lower.objects.filter(user=request.user)
+        return render(request, 'home.html', {'uppers': uppers, 'lowers': lowers})
     else:
         message = "You have to be logged in to see your uploaded photos."
         return render(request, 'home.html', {'message': message})
@@ -56,3 +57,15 @@ def upload_upper(request):
         return redirect('home')
     
     return render(request, 'upload_upper.html')
+
+def upload_lower(request):
+    if not request.user.is_authenticated:
+        message = "You have to be logged in to upload photos."
+        return render(request, 'upload_lower.html', {'message': message})
+    
+    if request.method == 'POST' and request.FILES.get('lower'):
+        lower = request.FILES['lower']
+        Lower.objects.create(user=request.user, lower=lower)
+        return redirect('home')
+    
+    return render(request, 'upload_lower.html')

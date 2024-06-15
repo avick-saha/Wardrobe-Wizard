@@ -3,8 +3,9 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Uploaded Upperbody Cloth Photos</h1>
+
 {% if user.is_authenticated %}
+    <h1>Uploaded Upperbody Cloth Photos</h1>
     {% if uppers %}
         {% for upper in uppers %}
             <div class="card mb-3" style="max-width: 540px;">
@@ -19,6 +20,23 @@
         <p>No photos uploaded yet.</p>
     {% endif %}
     <a href="{% url 'upload_upper' %}" class="btn btn-primary">Add Upperbody Cloth</a>
+
+    <h1>Uploaded Lowerbody Cloth Photos</h1>
+    {% if lowers %}
+        {% for lower in lowers %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ lower.lower.url }}" class="card-img" alt="Lower Body Cloth Photo">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No photos uploaded yet.</p>
+    {% endif %}
+    <a href="{% url 'upload_lower' %}" class="btn btn-primary">Add Lowerbody Cloth</a>
+
 {% else %}
     <p>{{ message }}</p>
     <a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>
