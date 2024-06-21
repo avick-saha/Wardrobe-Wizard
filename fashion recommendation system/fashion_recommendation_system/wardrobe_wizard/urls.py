@@ -9,4 +9,5 @@ urlpatterns = [
     path('user_logout', views.user_logout, name='user_logout'),
     path('upload_upper', views.upload_upper, name='upload_upper'),
     path('upload_lower', views.upload_lower, name='upload_lower'),
+    path('match_clothes_view', views.match_clothes_view, name='match_clothes_view'),
 ]

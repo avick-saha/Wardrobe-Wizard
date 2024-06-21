@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .models import Upper, Lower
+from .utils import process_images_in_folder, combinations_of_matching_colors
 
 # Create your views here.
 def home(request):
@@ -69,3 +70,16 @@ def upload_lower(request):
         return redirect('home')
     
     return render(request, 'upload_lower.html')
+
+def match_clothes_view(request):
+    upper_images = Upper.objects.all()
+    lower_images = Lower.objects.all()
+
+    dominant_colors_upper = process_images_in_folder(upper_images, 'upper')
+    dominant_colors_lower = process_images_in_folder(lower_images, 'lower')
+
+    matching_combinations = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower)
+
+    return render(request, 'match_results.html', {'combinations': matching_combinations})
+    # return HttpResponse(matching_combinations)
+    # print(matching_combinations)
