@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -59,6 +59,12 @@ def upload_upper(request):
     
     return render(request, 'upload_upper.html')
 
+def delete_upper(request, pk):
+    upper = get_object_or_404(Upper, pk=pk)
+    if request.method == 'GET':
+        upper.delete()
+        return redirect('home')
+
 def upload_lower(request):
     if not request.user.is_authenticated:
         message = "You have to be logged in to upload photos."
@@ -81,5 +87,3 @@ def match_clothes_view(request):
     matching_combinations = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower)
 
     return render(request, 'match_results.html', {'combinations': matching_combinations})
-    # return HttpResponse(matching_combinations)
-    # print(matching_combinations)
