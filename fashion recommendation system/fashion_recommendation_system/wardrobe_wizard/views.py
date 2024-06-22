@@ -14,7 +14,7 @@ def home(request):
         lowers = Lower.objects.filter(user=request.user)
         return render(request, 'home.html', {'uppers': uppers, 'lowers': lowers})
     else:
-        message = "You have to be logged in to see your uploaded photos."
+        message = "You have to be logged in to use this site."
         return render(request, 'home.html', {'message': message})
 
 def user_signup(request):
@@ -76,6 +76,13 @@ def upload_lower(request):
         return redirect('home')
     
     return render(request, 'upload_lower.html')
+
+def delete_lower(request, pk):
+    lower = get_object_or_404(Lower, pk=pk)
+    if request.user.is_authenticated and request.method == 'GET':
+        lower.delete()
+        return redirect('home')
+    return redirect('home')
 
 def match_clothes_view(request):
     upper_images = Upper.objects.all()

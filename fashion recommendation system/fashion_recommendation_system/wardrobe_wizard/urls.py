@@ -10,5 +10,6 @@ urlpatterns = [
     path('upload_upper', views.upload_upper, name='upload_upper'),
     path('delete_upper/<int:pk>/', views.delete_upper, name='delete_upper'),
     path('upload_lower', views.upload_lower, name='upload_lower'),
+    path('delete_lower/<int:pk>/', views.delete_lower, name='delete_lower'),
     path('match_clothes_view', views.match_clothes_view, name='match_clothes_view'),
 ]

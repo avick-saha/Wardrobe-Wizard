@@ -7,14 +7,7 @@ class Upper(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     upper = models.ImageField(upload_to='uppers/')
 
-    # def __str__(self):
-    #     return self.title
-
     
 class Lower(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lower = models.ImageField(upload_to='lowers/')
-
-    # def __str__(self):
-    #     return self.title
-    

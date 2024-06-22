@@ -4,27 +4,43 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Log In</h2>
-    <form action="/user_login" method="POST" class="needs-validation" novalidate>
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-            <div class="invalid-feedback">Please enter a username.</div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card border-1">
+                <div class="card-header bg-light text-dark text-center">
+                    <h4 class="mb-0">Log In</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/user_login" method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control custom-input" id="username" name="username" placeholder="johndoe" required>
+                            <div class="invalid-feedback">Please enter a username.</div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control custom-input" id="password" name="password" placeholder="Password#123" required>
+                            <div class="invalid-feedback">Please enter a password.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark w-100">Log In</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <div class="invalid-feedback">Please enter a password.</div>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Log In</button>
-    </form>
+    </div>
 </div>
 
+<style>
+    .custom-input:focus {
+        box-shadow: none;
+        border-color: #ced4da; /* Default border color */
+    }
+</style>
+
 <script>
-    // JavaScript for disabling form submissions if there are invalid fields
     (function() {
         'use strict';
         window.addEventListener('load', function() {

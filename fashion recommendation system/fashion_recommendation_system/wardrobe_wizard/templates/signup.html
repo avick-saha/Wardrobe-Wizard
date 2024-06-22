@@ -4,51 +4,67 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Sign Up</h2>
-    <form action="/user_signup" method="POST" class="needs-validation" novalidate>
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-            <div class="invalid-feedback">Please enter a username.</div>
-        </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card border-1">
+                <div class="card-header bg-light text-dark text-center">
+                    <h4 class="mb-0">Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'user_signup' %}" method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control custom-input" id="username" name="username" placeholder="avicksaha" required>
+                            <div class="invalid-feedback">Please enter a username.</div>
+                        </div>
 
-        <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input type="text" class="form-control" id="first_name" name="first_name" required>
-            <div class="invalid-feedback">Please enter your first name.</div>
-        </div>
+                        <div class="form-group mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control custom-input" id="first_name" name="first_name" placeholder="Avick" required>
+                            <div class="invalid-feedback">Please enter your first name.</div>
+                        </div>
 
-        <div class="form-group">
-            <label for="last_name">Last Name:</label>
-            <input type="text" class="form-control" id="last_name" name="last_name" required>
-            <div class="invalid-feedback">Please enter your last name.</div>
+                        <div class="form-group mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control custom-input" id="last_name" name="last_name" placeholder="Saha" required>
+                            <div class="invalid-feedback">Please enter your last name.</div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control custom-input" id="email" name="email" placeholder="avick.saha@example.com" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control custom-input" id="password" name="password" placeholder="Password#123" required>
+                            <div class="invalid-feedback">Please enter a password.</div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control custom-input" id="confirm_password" name="confirm_password" placeholder="Password#123" required>
+                            <div class="invalid-feedback">Please confirm your password.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark w-100">Sign Up</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-            <div class="invalid-feedback">Please enter a valid email address.</div>
-        </div>
-        
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <div class="invalid-feedback">Please enter a password.</div>
-        </div>
-        
-        <div class="form-group">
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <div class="invalid-feedback">Please confirm your password.</div>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Sign Up</button>
-    </form>
+    </div>
 </div>
 
+<style>
+    .custom-input:focus {
+        box-shadow: none;
+        border-color: #ced4da; /* Default border color */
+    }
+</style>
+
 <script>
-    // JavaScript for disabling form submissions if there are invalid fields
     (function() {
         'use strict';
         window.addEventListener('load', function() {

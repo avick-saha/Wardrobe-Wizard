@@ -6,8 +6,8 @@
 
 {% if user.is_authenticated %}
 
-<div class="container">
-    <h1>Uploaded Upperbody Cloth Photos</h1>
+<div class="container-fluid">
+    <h1 class="mb-4">Uploaded Upperbody Cloth Photos</h1>
     {% if uppers %}
         <div class="row">
             {% for upper in uppers %}
@@ -24,33 +24,32 @@
     {% else %}
         <p>No photos uploaded yet.</p>
     {% endif %}
-    <a href="{% url 'upload_upper' %}" class="btn btn-dark">Add Upperbody Cloth</a>
+    <a href="{% url 'upload_upper' %}" class="my-5 btn btn-dark">Add Upper Body Clothes</a>
 </div>
 
 
-
-
-
-
-<h1>Uploaded Lowerbody Cloth Photos</h1>
-{% if lowers %}
-{% for lower in lowers %}
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row no-gutters">
-        <div class="col-md-4">
-            <img src="{{ lower.lower.url }}" class="card-img" alt="Lower Body Cloth Photo">
+<div class="container">
+    <h1 class="mb-4">Uploaded Lowerbody Cloth Photos</h1>
+    {% if lowers %}
+        <div class="row">
+            {% for lower in lowers %}
+                <div class="col-3">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ lower.lower.url }}" class="card-img-top" alt="Lower Body Cloth Photo">
+                            <div class="card-body">
+                                <a href="{% url 'delete_lower' lower.pk %}" class="btn btn-dark">Delete</a>
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
         </div>
-    </div>
+    {% else %}
+        <p>No photos uploaded yet.</p>
+    {% endif %}
+    <a href="{% url 'upload_lower' %}" class="my-5 btn btn-dark">Add Lower Body Clothes</a>
 </div>
-{% endfor %}
-{% else %}
-<p>No photos uploaded yet.</p>
-{% endif %}
-<a href="{% url 'upload_lower' %}" class="btn btn-dark">Add Lowerbody Cloth</a>
 
 {% else %}
-<p>{{ message }}</p>
-<a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>
-<a href="{% url 'user_signup' %}" class="btn btn-secondary">Sign Up</a>
+    <p>{{ message }}</p>
 {% endif %}
 {% endblock %}
