@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from .models import Upper, Lower
+from .models import Upper, Lower, MatchingCombination
 from .utils import process_images_in_folder, combinations_of_matching_colors
 
 # Create your views here.
@@ -94,6 +94,19 @@ def match_clothes_view(request):
 
         matching_combinations = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower)
 
-        return render(request, 'match_results.html', {'combinations': matching_combinations})
+        # Save matching combinations to the database if not already present
+        for upper, lower in matching_combinations:
+            if not MatchingCombination.objects.filter(user=request.user, upper=upper, lower=lower).exists():
+                MatchingCombination.objects.create(user=request.user, upper=upper, lower=lower)
+
+        return redirect('view_combinations')  # Redirect to a view that displays combinations
+    else:
+        return redirect('home')
+    
+
+def view_combinations(request):
+    if request.user.is_authenticated:
+        combinations = MatchingCombination.objects.filter(user=request.user)
+        return render(request, 'view_combinations.html', {'combinations': combinations})
     else:
         return redirect('home')

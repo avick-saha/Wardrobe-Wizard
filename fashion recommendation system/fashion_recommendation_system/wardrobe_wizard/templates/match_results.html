@@ -3,7 +3,7 @@
 {% block title %}Matching Clothes{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-4">Matching Clothes Combinations</h1>
+{% comment %} <h1 class="text-center mb-4">Matching Clothes Combinations</h1>
 <div class="combinations">
     {% for upper, lowers in combinations.items %}
         <div class="card mb-4">
@@ -21,5 +21,6 @@
             </div>
         </div>
     {% endfor %}
-</div>
+</div> {% endcomment %}
+done
 {% endblock %}

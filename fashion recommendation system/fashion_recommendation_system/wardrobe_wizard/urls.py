@@ -12,4 +12,5 @@ urlpatterns = [
     path('upload_lower', views.upload_lower, name='upload_lower'),
     path('delete_lower/<int:pk>/', views.delete_lower, name='delete_lower'),
     path('match_clothes_view', views.match_clothes_view, name='match_clothes_view'),
+    path('view_combinations/', views.view_combinations, name='view_combinations'),
 ]

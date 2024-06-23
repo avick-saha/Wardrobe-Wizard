@@ -69,14 +69,10 @@ def combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower
         ('Yellow',): (('Blue',), ('Black',))
     }
 
-    combinations = {}
+    combinations = []
     for upper_color, upper_obj in dominant_colors_upper.items():
-        combinations[upper_obj] = []
         for lower_color, lower_obj in dominant_colors_lower.items():
             if upper_color in dataset and lower_color in dataset[upper_color]:
-                combinations[upper_obj].append(lower_obj)
+                combinations.append((upper_obj, lower_obj))
 
-    # return json.dumps(combinations, indent=4)
     return combinations
-
-
