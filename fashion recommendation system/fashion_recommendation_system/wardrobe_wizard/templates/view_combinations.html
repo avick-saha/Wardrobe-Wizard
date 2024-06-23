@@ -1,46 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Matching Clothes Combinations</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: #333;
-        }
-        .combinations {
-            margin-top: 20px;
-        }
-        .combination-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .combination-item img {
-            max-width: 100px;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .combination-item h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
-    <h1>Matching Clothes Combinations</h1>
-    <div class="combinations">
-        {% for combination in combinations %}
-            <div class="combination-item">
-                <h3>Upper Clothing:</h3>
-                <img src="{{ combination.upper.upper.url }}" alt="Upper Clothing">
-                <h3>Matches with Lower Clothing:</h3>
-                <img src="{{ combination.lower.lower.url }}" alt="Lower Clothing">
-            </div>
-        {% endfor %}
+{% extends 'base.html' %}
+
+{% block title %}Matching Clothes Combinations{% endblock %}
+
+{% block content %}
+    <div class="container mb-5">
+        <h1 class="mb-4">Matching Clothes Combinations</h1>
+        <div class="row g-4">
+            {% for combination in combinations %}
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="row g-0">
+                            <div class="col-6">
+                                <img src="{{ combination.upper.upper.url }}" class="card-img-top" alt="Upper Clothing">
+                            </div>
+                            <div class="col-6">
+                                <img src="{{ combination.lower.lower.url }}" class="card-img-top" alt="Lower Clothing">
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Combination</h5>
+                            {% comment %} <p class="card-text">{{ combination.upper }} + {{ combination.lower }}</p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-</body>
-</html>
+{% endblock %}
+
+
