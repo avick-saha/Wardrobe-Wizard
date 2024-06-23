@@ -12,7 +12,7 @@
         <div class="row">
             {% for upper in uppers %}
                 <div class="col-3">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="max-width: 18rem;">
                             <img src="{{ upper.upper.url }}" class="card-img-top" alt="Upper Body Cloth Photo">
                             <div class="card-body">
                                 <a href="{% url 'delete_upper' upper.pk %}" class="btn btn-dark">Delete</a>

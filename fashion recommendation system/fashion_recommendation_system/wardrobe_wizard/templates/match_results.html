@@ -1,50 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Matching Clothes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: #333;
-        }
-        .combinations {
-            margin-top: 20px;
-        }
-        .combination-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .combination-item img {
-            max-width: 100px;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .combination-item h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
-    <h1>Matching Clothes Combinations</h1>
-    <div class="combinations">
-        {% for upper, lowers in combinations.items %}
-            <div class="combination-item">
-                <h3>Upper Clothing:</h3>
-                <img src="{{ upper.upper.url }}" alt="Upper Clothing">
-                <h3>Matches with Lower Clothing:</h3>
-                <ul>
+{% extends 'base.html' %}
+
+{% block title %}Matching Clothes{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Matching Clothes Combinations</h1>
+<div class="combinations">
+    {% for upper, lowers in combinations.items %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Upper Clothing</h5>
+                <img src="{{ upper.upper.url }}" alt="Upper Clothing" class="img-fluid mb-3">
+                <h5 class="card-title">Matches with Lower Clothing</h5>
+                <ul class="list-unstyled">
                     {% for lower in lowers %}
-                        <li><img src="{{ lower.lower.url }}" alt="Lower Clothing"></li>
+                        <li class="mb-2">
+                            <img src="{{ lower.lower.url }}" alt="Lower Clothing" class="img-fluid">
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
-        {% endfor %}
-    </div>
-</body>
-</html>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

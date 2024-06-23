@@ -85,12 +85,15 @@ def delete_lower(request, pk):
     return redirect('home')
 
 def match_clothes_view(request):
-    upper_images = Upper.objects.all()
-    lower_images = Lower.objects.all()
+    if request.user.is_authenticated:
+        upper_images = Upper.objects.filter(user=request.user)
+        lower_images = Lower.objects.filter(user=request.user)
 
-    dominant_colors_upper = process_images_in_folder(upper_images, 'upper')
-    dominant_colors_lower = process_images_in_folder(lower_images, 'lower')
+        dominant_colors_upper = process_images_in_folder(upper_images, 'upper')
+        dominant_colors_lower = process_images_in_folder(lower_images, 'lower')
 
-    matching_combinations = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower)
+        matching_combinations = combinations_of_matching_colors(dominant_colors_upper, dominant_colors_lower)
 
-    return render(request, 'match_results.html', {'combinations': matching_combinations})
+        return render(request, 'match_results.html', {'combinations': matching_combinations})
+    else:
+        return redirect('home')
