@@ -1,18 +1,76 @@
 {% extends 'base.html' %}
 
-{% block title %}Upload Lower Body Cloths Photo{% endblock %}
+{% block title %}Upload Lower Body Clothes{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-    <form method="post" enctype="multipart/form-data">
+<div class="container mt-5">
+    <h2 class="text-center">Upload Lower Body Clothes</h2>
+    <form id="upload-lower-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="lower">Choose a photo to upload</label>
-            <input type="file" class="form-control-file" id="lower" name="lower" required>
+        <div id="drop-area-lower" class="drop-area">
+            <p>Drag and drop your file here or click to upload</p>
+            <input type="file" id="fileElem-lower" name="lower" accept="image/*" onchange="handleFiles(this.files, 'lower')">
         </div>
-        <button type="submit" class="mt-2 btn btn-dark">Upload</button>
+        <button type="submit" class="btn btn-primary mt-3">Upload</button>
     </form>
-{% else %}
-    <p>{{ message }}</p>
-{% endif %}
+</div>
+
+<script>
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(e) {
+        e.currentTarget.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        e.currentTarget.classList.remove('highlight');
+    }
+
+    function handleDrop(e, type) {
+        let dt = e.dataTransfer;
+        let files = dt.files;
+        handleFiles(files, type);
+    }
+
+    function handleFiles(files, type) {
+        let fileInput = document.getElementById(`fileElem-${type}`);
+        fileInput.files = files;
+    }
+
+    function initDragAndDrop(type) {
+        let dropArea = document.getElementById(`drop-area-${type}`);
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        dropArea.addEventListener('drop', (e) => handleDrop(e, type), false);
+    }
+
+    initDragAndDrop('lower');
+</script>
+
+<style>
+    .drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 4px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .highlight {
+        border-color: #007bff;
+    }
+</style>
 {% endblock %}
